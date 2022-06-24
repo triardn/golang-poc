@@ -1,0 +1,5 @@
+# System Squad
+helmfile.yaml @kitabisa/system-squad
+Makefile @kitabisa/system-squad
+.infra/ @kitabisa/system-squad
+.github/ @kitabisa/system-squad

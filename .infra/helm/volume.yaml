@@ -1,0 +1,14 @@
+secrets:
+  envFrom:
+    - "{{ .Values.meta.name }}-config-{{ .Values.meta.env }}"
+    - "pandemi-config-{{ .Values.meta.env }}"
+
+configMaps:
+  envFrom:
+    - "pandemi-config-{{ .Values.meta.env }}"
+
+  volumes:
+    - name: "{{ .Values.meta.name }}-config-{{ .Values.meta.env }}"
+      mounts:
+        - mountPath: "/opt/{{ .Values.meta.name }}/params"
+          readOnly: true

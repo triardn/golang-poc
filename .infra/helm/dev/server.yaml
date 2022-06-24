@@ -1,0 +1,69 @@
+server:
+  enabled: true
+
+  port: 8080
+
+  istio:
+    injected: true
+
+  readiness:
+    path: /health
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 512Mi
+    limits:
+      cpu: 200m
+      memory: 1Gi
+
+service:
+  enabled: true
+
+ingress:
+  enabled: true
+
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+    nginx.ingress.kubernetes.io/limit-rps: "10"
+
+  tls:
+    - hosts:
+        - golang-poc.ktbs.me
+
+  hosts:
+    - host: golang-poc.ktbs.me
+      paths:
+        - "/"
+
+virtualService:
+  enabled: true
+
+  gateways:
+    - backend-gateway/backend-gateway-dev
+    - geni-dev/gateway
+
+  hosts:
+    - geni.ktbs.me
+    - geni.kitabisa.me
+
+  routes:
+    - match:
+        - uri:
+            prefix: /golang-poc/
+      retries:
+        attempts: 3
+        perTryTimeout: 15s
+        retryOn: gateway-error
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: golang-poc-server-dev
+            port:
+              number: 80
+          weight: 100
+
+autoscaling:
+  minReplicas: 1
+  maxReplicas: 3

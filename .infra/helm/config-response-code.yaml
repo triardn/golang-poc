@@ -1,0 +1,6 @@
+config:
+  data:
+    RESPONSE_CODE_EN_101001: "Database connection error"
+    RESPONSE_CODE_EN_101002: "Cache connection error"
+    RESPONSE_CODE_EN_101003: "Invalid authentication token"
+    RESPONSE_CODE_EN_101004: "Invalid request"

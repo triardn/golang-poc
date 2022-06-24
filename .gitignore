@@ -1,0 +1,22 @@
+vendor/
+bin/
+.idea/
+*.out
+*.log
+*.tmp
+.DS_STORE
+.DS_Store
+
+# config file
+params/.env
+
+# executables & libs
+golang-poc
+*.exe
+*.so
+*.dll
+*.test
+*.dylib
+
+# decrypted secret file
+*.dec

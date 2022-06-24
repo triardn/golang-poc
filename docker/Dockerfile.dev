@@ -1,0 +1,18 @@
+FROM kitabisa/debian-base-image:latest
+
+ARG GIT_COMMIT
+ARG VERSION
+LABEL REPO="https://github.com/kitabisa/golang-poc"
+LABEL GIT_COMMIT=$GIT_COMMIT
+LABEL VERSION=$VERSION
+
+# Because of https://github.com/docker/docker/issues/14914
+ENV PATH=$PATH:/opt/golang-poc
+
+WORKDIR /opt/golang-poc
+
+COPY ./bin/golang-poc .
+COPY ./params ./params
+COPY ./migrations ./migrations/
+
+COPY ./params/.env ./params/.env

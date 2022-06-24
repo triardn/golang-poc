@@ -1,0 +1,38 @@
+version: '3.5'
+
+services:
+  
+  postgresql:
+    image: postgres:13
+    container_name: golang-poc-postgresql
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: golang-poc
+    ports:
+      - 5432:5432
+    networks:
+      - kb-backend
+    restart: always
+  
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - kb-backend
+    restart: always
+  
+  golang-poc-app:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.dev
+      args:
+        - GITHUB_TOKEN=${GITHUB_TOKEN}
+networks:
+  kb-backend:
+    driver: bridge
+    external: false
+    name: kb-backend
+

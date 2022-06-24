@@ -1,0 +1,43 @@
+name: Generate Docs in PR
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'docs/*.mmd'
+      - 'docs/*.py'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checking out repository
+        uses: actions/checkout@v2
+
+      - name: Generate architecture diagram
+        run: make architecture
+
+      - name: Generate other diagram with mermaid js
+        run: make mermaid-diagram
+
+      - name: Get generated files
+        id: getgenerated
+        run: |
+          echo "::set-output name=files::$(find docs/out -type f -name '*' |xargs echo)"
+
+      - uses: actions/upload-artifact@v1
+        with:
+          name: generated-diagram
+          path: docs/out
+
+      - name: show diagram on PR comment
+        uses: KeisukeYamashita/create-comment@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          unique: true
+          check-only-first-line: true
+          comment: |
+            :warning: There are changes on diagram docs, download it from artifacts :warning:
+            https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
