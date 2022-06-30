@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/go-gorp/gorp/v3"
 	_ "github.com/lib/pq" // defines postgreSQL driver used
-	"gopkg.in/gorp.v3"
 )
 
 // DBPostgreOption options for postgre connection

@@ -7,6 +7,7 @@ import (
 	cmiddleware "github.com/go-chi/chi/middleware"
 	"github.com/kitabisa/golang-poc/internal/app/commons"
 	"github.com/kitabisa/golang-poc/internal/app/handler"
+	"github.com/kitabisa/golang-poc/internal/app/handler/slackbot"
 	"github.com/kitabisa/golang-poc/version"
 	phttp "github.com/kitabisa/perkakas/v2/http"
 
@@ -39,8 +40,18 @@ func Router(opt handler.HandlerOption) *chi.Mux {
 	healthCheckHandler.HandlerOption = opt
 	healthCheckHandler.Handler = phandler(healthCheckHandler.HealthCheck)
 
+	slackBotHandler := slackbot.SlackBotHandler{}
+	slackBotHandler.HandlerOption = opt
+	slackBotHandler.Handler = phandler(slackBotHandler.Request)
+
 	// Setup your routing here
 	r.Method(http.MethodGet, "/health-check", healthCheckHandler)
+
+	// slackbot
+	r.Group(func(r chi.Router) {
+		r.Method(http.MethodPost, "/slackbot", slackBotHandler)
+	})
+
 	return r
 }
 

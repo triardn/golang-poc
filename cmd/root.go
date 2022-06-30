@@ -2,8 +2,7 @@ package cmd
 
 import (
 	"fmt"
-	"os"
-	"github.com/spf13/cobra"
+	"github.com/go-gorp/gorp/v3"
 	"github.com/go-redis/redis/v8"
 	"github.com/kitabisa/golang-poc/config"
 	"github.com/kitabisa/golang-poc/internal/app/appcontext"
@@ -14,7 +13,8 @@ import (
 	"github.com/kitabisa/golang-poc/internal/app/server"
 	"github.com/kitabisa/golang-poc/internal/app/service"
 	"github.com/sirupsen/logrus"
-	"gopkg.in/gorp.v3"
+	"github.com/spf13/cobra"
+	"os"
 )
 
 // rootCmd represents the base command when called without any subcommands

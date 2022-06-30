@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/go-gorp/gorp/v3"
 	_ "github.com/go-sql-driver/mysql" // defines mysql driver used
-	"gopkg.in/gorp.v3"
 )
 
 // DBMysqlOption options for mysql connection

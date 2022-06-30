@@ -3,10 +3,10 @@ package appcontext
 import (
 	"errors"
 
+	"github.com/go-gorp/gorp/v3"
 	"github.com/kitabisa/golang-poc/config"
 	"github.com/kitabisa/golang-poc/internal/app/driver"
 	"github.com/kitabisa/golang-poc/internal/app/metrics"
-	"gopkg.in/gorp.v3"
 )
 
 const (
@@ -51,20 +51,22 @@ func (a *AppContext) GetDBInstance(dbType string) (*gorp.DbMap, error) {
 
 	return gorp, err
 }
+
 // GetPostgreOption returns postgresql option
 func (a *AppContext) GetPostgreOption() driver.DBPostgreOption {
 	return driver.DBPostgreOption{
-		IsEnable:    	 a.config.GetBool("POSTGRE_IS_ENABLED"),
-		Host:        	 a.config.GetString("POSTGRE_HOST"),
-		Port:        	 a.config.GetInt("POSTGRE_PORT"),
-		Username:    	 a.config.GetString("POSTGRE_USERNAME"),
-		Password:    	 a.config.GetString("POSTGRE_PASSWORD"),
-		DBName:      	 a.config.GetString("POSTGRE_DB_NAME"),
-		MaxOpenConn: 	 a.config.GetInt("POSTGRE_MAX_OPEN_CONN"),
-		MaxIdleConn: 	 a.config.GetInt("POSTGRE_MAX_IDLE_CONN"),
+		IsEnable:        a.config.GetBool("POSTGRE_IS_ENABLED"),
+		Host:            a.config.GetString("POSTGRE_HOST"),
+		Port:            a.config.GetInt("POSTGRE_PORT"),
+		Username:        a.config.GetString("POSTGRE_USERNAME"),
+		Password:        a.config.GetString("POSTGRE_PASSWORD"),
+		DBName:          a.config.GetString("POSTGRE_DB_NAME"),
+		MaxOpenConn:     a.config.GetInt("POSTGRE_MAX_OPEN_CONN"),
+		MaxIdleConn:     a.config.GetInt("POSTGRE_MAX_IDLE_CONN"),
 		ConnMaxLifetime: a.config.GetDuration("POSTGRE_CONN_MAX_LIFETIME"),
 	}
 }
+
 // GetCacheOption returns redis options
 func (a *AppContext) GetCacheOption() driver.CacheOption {
 	return driver.CacheOption{
@@ -83,8 +85,6 @@ func (a *AppContext) GetCacheOption() driver.CacheOption {
 	}
 }
 
-
-
 // GetTelegrafOption return telegraf options
 func (a *AppContext) GetTelegrafOption() metrics.TelegrafOption {
 	return metrics.TelegrafOption{
@@ -93,4 +93,3 @@ func (a *AppContext) GetTelegrafOption() metrics.TelegrafOption {
 		Port:      a.config.GetInt("TELEGRAF_PORT"),
 	}
 }
-
